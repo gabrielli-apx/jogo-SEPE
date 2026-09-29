@@ -1,0 +1,129 @@
+:root{
+  --wood-1:#5c2c1c; --wood-2:#2a1109; --wood-line: rgba(0,0,0,.2);
+  --mat:#41211a; --paper:#ead9ae; --paper-shadow:#c08a5e; --ink:#2c1c0e; --ink-soft:#5a4327;
+  --gold:#c9713a; --lapis:#8a3a2b; --lamp: rgba(224,109,61,.2);
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --paper:#dcc99a; } }
+:root[data-theme="dark"]{ --paper:#dcc99a; }
+html{scroll-padding-top:env(safe-area-inset-top,0px);}
+*{box-sizing:border-box;}
+body{
+  margin:0; min-height:100%; font-family:'Assistant',sans-serif; color:var(--ink);
+  background:
+    radial-gradient(ellipse at 50% 0%, var(--lamp), transparent 60%),
+    linear-gradient(180deg, var(--wood-1), var(--wood-2));
+  background-attachment:fixed; position:relative;
+  display:flex; flex-direction:column; align-items:center;
+  padding:16px 14px 40px;
+}
+#hieroBg{
+  position:fixed; inset:0; z-index:-1; overflow:hidden; pointer-events:none;
+  font-family:'Noto Sans Egyptian Hieroglyphs'; font-size:1.6rem; line-height:1.9;
+  letter-spacing:.4em; color:rgba(230,180,150,.09);
+  padding:20px; word-break:break-all;
+}
+h1{ font-family:'Cinzel',serif; font-size:1.3rem; color:#f1ddb0; text-align:center; margin:6px 0 2px; text-shadow:0 2px 3px rgba(0,0,0,.5);}
+.sub{ color:#d8c298; font-size:.85rem; text-align:center; margin-bottom:14px; max-width:420px; line-height:1.4;}
+ 
+/* start screen */
+.start-screen{ position:fixed; inset:0; z-index:100; display:flex; align-items:center; justify-content:center;
+  background:radial-gradient(ellipse at 50% 30%, rgba(90,60,20,.5), rgba(10,6,2,.95)); padding:28px;}
+.start-card{ max-width:380px; text-align:center; background:var(--paper); border-radius:8px;
+  padding:28px 22px; box-shadow:0 20px 50px rgba(0,0,0,.5); border:1px solid var(--paper-shadow); }
+.start-card .glyph-row{ font-family:'Noto Sans Egyptian Hieroglyphs'; font-size:1.8rem; color:var(--gold); letter-spacing:10px; margin-bottom:10px; opacity:.9;}
+.start-card h2{ font-family:'Cinzel',serif; color:var(--ink); font-size:1.25rem; margin:0 0 14px; line-height:1.4;}
+.start-card p{ color:var(--ink-soft); font-size:.95rem; line-height:1.6; margin-bottom:22px;}
+.begin-btn{ font-family:'Cinzel',serif; background:var(--gold); border:none; color:#2c1c0e; font-weight:700;
+  padding:12px 26px; border-radius:3px; font-size:.95rem; cursor:pointer; box-shadow:0 6px 16px rgba(0,0,0,.4);}
+ 
+.legend{ background:var(--paper); border-radius:4px; padding:10px 14px; max-width:420px; width:100%;
+  box-shadow:0 6px 14px rgba(0,0,0,.35); border:1px solid var(--paper-shadow); margin-bottom:16px;}
+.legend h2{ font-family:'Cinzel',serif; font-size:.85rem; margin:0 0 6px; color:var(--ink-soft);}
+.legend-grid{ display:flex; flex-wrap:wrap; gap:8px; }
+.legend-item{ display:flex; flex-direction:column; align-items:center; min-width:30px; }
+.legend-item .g{ font-family:'Noto Sans Egyptian Hieroglyphs'; font-size:1.3rem; }
+.legend-item .l{ font-size:.65rem; color:var(--ink-soft); }
+ 
+.progress{ display:flex; gap:8px; margin-bottom:16px; }
+.dot{ width:9px; height:9px; border-radius:50%; background:rgba(255,255,255,.25); }
+.dot.done{ background:var(--gold); }
+.dot.active{ background:#f1ddb0; box-shadow:0 0 6px #f1ddb0; }
+ 
+.desk{
+  position:relative; width:100%; max-width:460px; min-height:600px;
+  background:
+    radial-gradient(circle at 12% 10%, rgba(255,255,255,.04), transparent 40%),
+    var(--mat);
+  border-radius:6px; box-shadow:inset 0 0 40px rgba(0,0,0,.5), 0 8px 20px rgba(0,0,0,.35);
+  border:1px solid rgba(0,0,0,.4);
+  overflow:hidden; touch-action:none;
+}
+.desk::before{
+  content:''; position:absolute; width:120px; height:120px; right:-20px; bottom:-20px;
+  border:1px solid rgba(201,113,58,.2); border-radius:50%; pointer-events:none;
+}
+.desk::after{
+  content:''; position:absolute; width:70px; height:70px; right:6px; bottom:6px;
+  border:1px solid rgba(201,113,58,.16); border-radius:50%; pointer-events:none;
+}
+.desk-hint{ position:absolute; top:8px; left:0; right:0; text-align:center; font-size:.72rem; color:rgba(230,211,172,.55); pointer-events:none;}
+ 
+.paper{
+  position:absolute; width:112px; height:86px; cursor:grab; user-select:none; touch-action:none;
+  transition:box-shadow .2s;
+}
+.paper.dragging{ cursor:grabbing; z-index:20; }
+.paper .crumple{
+  position:absolute; inset:0; background:var(--paper); border-radius:3px;
+  box-shadow: inset 0 0 12px rgba(0,0,0,.35), 2px 3px 0 rgba(0,0,0,.15), 0 4px 8px rgba(0,0,0,.4);
+  background-image:
+    repeating-conic-gradient(from 30deg, rgba(0,0,0,.06) 0deg 8deg, transparent 8deg 24deg),
+    repeating-conic-gradient(from 100deg, rgba(255,255,255,.15) 0deg 6deg, transparent 6deg 30deg);
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Cinzel',serif; color:var(--ink-soft); font-size:1.5rem;
+}
+.paper.done .crumple{ opacity:.4; }
+.paper .tag{ position:absolute; bottom:-17px; left:0; right:0; text-align:center; font-size:.65rem; color:#e8d6ac; pointer-events:none;}
+ 
+.overlay{ position:fixed; inset:0; background:rgba(20,12,5,.72); display:none; align-items:center; justify-content:center; padding:24px; z-index:50;}
+.overlay.open{ display:flex; }
+.unfolded{ background:var(--paper); border-radius:4px; padding:22px 20px; max-width:360px; width:100%;
+  box-shadow:0 20px 40px rgba(0,0,0,.5); border:1px solid var(--paper-shadow);
+  transform:scale(.85) rotate(-3deg); opacity:0; animation:unfold .45s ease forwards;}
+@keyframes unfold{ to{ transform:scale(1) rotate(0deg); opacity:1; } }
+.unfolded h3{ font-family:'Cinzel',serif; font-size:1rem; margin:0 0 10px; color:var(--ink-soft); }
+.unfolded .glyphs{ font-family:'Noto Sans Egyptian Hieroglyphs'; font-size:2.2rem; letter-spacing:6px; margin:10px 0; }
+.unfolded .glyphs.vertical{ display:flex; flex-direction:column; letter-spacing:0; gap:4px; align-items:flex-start; }
+.unfolded p{ margin:6px 0; line-height:1.5; font-size:.95rem; }
+.unfolded .hint{ font-size:.8rem; color:var(--ink-soft); font-style:italic; }
+.close-btn{ margin-top:14px; background:none; border:1px solid var(--ink-soft); color:var(--ink-soft);
+  padding:6px 14px; border-radius:3px; font-size:.85rem; cursor:pointer; }
+ 
+.hint-card{ background:rgba(0,0,0,.05); border:1px solid var(--paper-shadow); border-radius:4px; padding:14px; margin-top:8px; }
+.hint-card h4{ font-family:'Cinzel',serif; font-size:.7rem; color:var(--ink-soft); text-align:center; margin-bottom:10px;}
+.hint-card .grid{ display:flex; flex-wrap:wrap; gap:14px; justify-content:center; }
+.hint-card .grid .legend-item .g{ font-size:1.5rem; }
+.hint-card .grid .legend-item .l{ font-size:.7rem; }
+ 
+.answer-box{ width:100%; max-width:420px; margin-top:24px; text-align:center; }
+.answer-box input{ font-family:'Cinzel',serif; font-size:1.05rem; text-align:center; padding:10px 14px;
+  border-radius:3px; border:1px solid var(--paper-shadow); background:var(--paper); color:var(--ink);
+  width:70%; max-width:280px; letter-spacing:1px;}
+.answer-box button{ font-family:'Cinzel',serif; margin-left:8px; padding:10px 16px; border-radius:3px; border:none;
+  background:var(--gold); color:#2c1c0e; font-weight:700; cursor:pointer;}
+.hint-btn{ background:transparent !important; border:1px solid var(--gold) !important; color:#f1ddb0 !important; }
+.hint-btn:hover{ background:rgba(201,113,58,.18) !important; }
+.feedback{ margin-top:10px; font-size:.85rem; min-height:0; border-radius:6px; display:inline-block; }
+.feedback.show{ padding:8px 16px; box-shadow:0 4px 10px rgba(0,0,0,.3); }
+.feedback.ok{ background:rgba(169,214,163,.14); border:1px solid #6fae67; color:#d7f0d1; }
+.feedback.err{ background:rgba(231,156,138,.14); border:1px solid #c15a3f; color:#ffe2d6; }
+ 
+.final-card{ background:var(--paper); border-radius:5px; padding:26px 20px; max-width:380px; text-align:center; box-shadow:0 10px 24px rgba(0,0,0,.4); margin-top:10px;}
+.final-card h2{ font-family:'Cinzel',serif; color:var(--ink-soft); }
+.legend{ display:none; }
+@media (min-width: 768px){
+  .desk{
+    max-width: 800px;
+  }
+}
