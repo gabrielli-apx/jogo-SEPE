@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Enigmas da Esfinge</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Noto+Sans+Egyptian+Hieroglyphs&family=Assistant:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/jogo.css">
+</head>
+<body>
+<div id="hieroBg"></div>
+
+<div class="start-screen" id="startScreen">
+  <div class="start-card">
+    <div class="glyph-row">𓂀 𓅓 𓏏 𓊪</div>
+    <h2>Agora, neste momento, você se transforma em arqueólogo.</h2>
+    <p>Decifre os enigmas da esfinge para conquistar o grande tesouro da tumba do faraó. Cada papiro sobre a mesa guarda uma pista. Arraste-os, examine-os, e monte a frase que abre a câmara final.</p>
+    <button class="begin-btn" id="beginBtn">Começar escavação</button>
+  </div>
+</div>
+
+<h1>Enigmas da Esfinge</h1>
+<p class="sub" id="levelDesc">Toque num papiro para desdobrá-lo, ou arraste-o pela mesa.</p>
+
+<div class="progress" id="progress"></div>
+<div class="legend"><h2>Pedra de Roseta: chave conhecida</h2><div class="legend-grid" id="legend"></div></div>
+<div class="desk" id="desk"><div class="desk-hint">mesa do arqueólogo</div></div>
+
+<div class="answer-box" id="answerBox">
+  <div><input id="answerInput" type="text" placeholder="digite a resposta" autocomplete="off"></div>
+  <button id="submitBtn">Decifrar</button>
+  <button id="hintBtn" class="hint-btn">💡 Dica</button>
+  <div class="feedback" id="feedback"></div>
+</div>
+
+<div class="overlay" id="overlay"><div class="unfolded" id="unfoldedContent"></div></div>
+
+<script src="js/jogo.js"></script>
+</body>
+</html>

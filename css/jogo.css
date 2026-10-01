@@ -51,7 +51,7 @@ h1{ font-family:'Cinzel',serif; font-size:1.3rem; color:#f1ddb0; text-align:cent
 .dot.active{ background:#f1ddb0; box-shadow:0 0 6px #f1ddb0; }
  
 .desk{
-  position:relative; width:100%; max-width:460px; min-height:600px;
+  position:relative; width:100%; max-width:460px; min-height:700px;
   background:
     radial-gradient(circle at 12% 10%, rgba(255,255,255,.04), transparent 40%),
     var(--mat);
@@ -122,8 +122,112 @@ h1{ font-family:'Cinzel',serif; font-size:1.3rem; color:#f1ddb0; text-align:cent
 .final-card{ background:var(--paper); border-radius:5px; padding:26px 20px; max-width:380px; text-align:center; box-shadow:0 10px 24px rgba(0,0,0,.4); margin-top:10px;}
 .final-card h2{ font-family:'Cinzel',serif; color:var(--ink-soft); }
 .legend{ display:none; }
+/* ===== Final: papiros se juntam + portal de pedra ===== */
+.final-scroll{
+  position:absolute; left:50%; top:50%; z-index:30; width:min(86%,340px);
+  padding:26px 18px 22px; text-align:center;
+  background:var(--paper); border-radius:4px;
+  border-top:10px solid #8a5a34; border-bottom:10px solid #8a5a34;
+  box-shadow:0 14px 34px rgba(0,0,0,.55), inset 0 0 22px rgba(0,0,0,.25);
+  transform:translate(-50%,-50%) scaleY(.05); opacity:0;
+  transition:transform .8s cubic-bezier(.2,.8,.3,1), opacity .5s ease;
+}
+.final-scroll.show{ transform:translate(-50%,-50%) scaleY(1); opacity:1; }
+.final-scroll.hide{ transform:translate(-50%,-50%) scale(.9); opacity:0; transition:transform .7s ease, opacity .7s ease; }
+.scroll-title{ font-family:'Cinzel',serif; font-size:.85rem; letter-spacing:2px; color:var(--ink-soft); margin-bottom:14px; }
+.scroll-line{ min-height:44px; display:flex; align-items:center; justify-content:center;
+  opacity:0; transform:translateY(8px); transition:opacity .5s ease, transform .5s ease; }
+.scroll-line.on{ opacity:1; transform:none; }
+.scroll-line .sg{ display:inline-block; font-family:'Noto Sans Egyptian Hieroglyphs'; font-size:1.3rem; letter-spacing:4px;
+  color:var(--ink); transition:opacity .25s ease, transform .25s ease; }
+.scroll-line .sg.swap{ opacity:0; transform:scale(.7); }
+.scroll-line .sg.word{ font-family:'Cinzel',serif; font-weight:700; font-size:1.2rem; letter-spacing:4px;
+  color:var(--lapis); text-shadow:0 0 10px rgba(201,113,58,.45); }
+ 
+.finale{ position:absolute; inset:0; z-index:40; pointer-events:none; overflow:hidden; }
+.finale .door-glow{ position:absolute; inset:0; z-index:1; opacity:0; transition:opacity 1.6s ease 1s;
+  background:radial-gradient(ellipse at 50% 50%, rgba(255,214,130,.5), transparent 70%); }
+.finale.open .door-glow{ opacity:1; }
+.final-stage{ position:absolute; inset:0; z-index:2; display:flex; align-items:center; justify-content:center; padding:16px; }
+.finale .final-card{ opacity:0; transform:scale(.9); transition:opacity 1.4s ease 1s, transform 1.4s ease 1s; }
+.finale.open .final-card{ opacity:1; transform:scale(1); }
+.final-glyphs{ font-family:'Noto Sans Egyptian Hieroglyphs'; font-size:1.8rem; letter-spacing:8px; color:var(--gold); margin-bottom:6px; }
+.final-answer{ font-family:'Cinzel',serif; font-weight:700; color:var(--lapis); letter-spacing:2px; }
+ 
+.door{ position:absolute; top:0; bottom:0; width:50%; z-index:5; opacity:0;
+  transition:opacity .8s ease, transform 2.8s cubic-bezier(.65,0,.25,1);
+  background:
+    linear-gradient(90deg, rgba(0,0,0,.4), transparent 20%, transparent 80%, rgba(0,0,0,.4)),
+    repeating-linear-gradient(0deg, rgba(0,0,0,.22) 0 2px, transparent 2px 70px),
+    radial-gradient(circle at 30% 25%, rgba(255,255,255,.08), transparent 55%),
+    #7a5a44;
+  box-shadow:inset 0 0 40px rgba(0,0,0,.65); }
+.door.left{ left:0; border-right:2px solid rgba(0,0,0,.6); }
+.door.right{ right:0; border-left:2px solid rgba(0,0,0,.6); }
+.finale.show .door{ opacity:1; }
+.door-glyphs{ position:absolute; top:0; bottom:0; display:flex; flex-direction:column; justify-content:space-evenly; align-items:center;
+  font-family:'Noto Sans Egyptian Hieroglyphs'; font-size:1.7rem; color:rgba(30,12,6,.55); text-shadow:0 1px 0 rgba(255,220,180,.15); }
+.door.left .door-glyphs{ right:14px; }
+.door.right .door-glyphs{ left:14px; }
+.finale.open .door.left{ transform:translateX(-101%); }
+.finale.open .door.right{ transform:translateX(101%); }
+ 
+@keyframes rumble{
+  0%,100%{ transform:translate(0,0); } 20%{ transform:translate(-2px,1px); } 40%{ transform:translate(2px,-1px); }
+  60%{ transform:translate(-1px,2px); } 80%{ transform:translate(1px,-2px); }
+}
+.finale.rumble .door{ animation:rumble .22s linear infinite; }
+ 
+.door-seam{ position:absolute; top:0; bottom:0; left:50%; width:3px; margin-left:-1.5px; z-index:6; opacity:0;
+  background:#ffd98a; box-shadow:0 0 18px 6px rgba(255,200,100,.7); transition:opacity .8s ease; }
+.finale.rumble .door-seam{ opacity:1; }
+.finale.open .door-seam{ opacity:0; transition:opacity .5s ease; }
+ 
+@keyframes dustfall{
+  0%{ transform:translateY(0); opacity:0; } 20%{ opacity:1; } 100%{ transform:translateY(520px); opacity:0; }
+}
+.dust{ position:absolute; top:0; width:4px; height:4px; border-radius:50%; background:rgba(220,190,140,.85);
+  z-index:7; opacity:0; animation:dustfall 1.6s linear forwards; }
+ 
+/* ===== Tesouro final ===== */
+.final-stage{ flex-direction:column; gap:4px; padding:12px; }
+.treasure{ position:relative; width:190px; flex:none; }
+.treasure .chest{ position:relative; z-index:1; display:block; width:100%; height:auto; overflow:visible;
+  filter:drop-shadow(0 8px 14px rgba(0,0,0,.5)); }
+.treasure .rays{ position:absolute; z-index:0; left:50%; top:42%; width:320px; height:320px; margin:-160px 0 0 -160px;
+  border-radius:50%; opacity:0; pointer-events:none;
+  background:repeating-conic-gradient(rgba(255,214,120,.4) 0 7deg, transparent 7deg 18deg);
+  -webkit-mask-image:radial-gradient(circle, #000 0%, transparent 68%);
+  mask-image:radial-gradient(circle, #000 0%, transparent 68%);
+  animation:raysSpin 24s linear infinite; }
+.finale.open .treasure .rays{ opacity:1; transition:opacity 1.4s ease 2.4s; }
+@keyframes raysSpin{ to{ transform:rotate(360deg); } }
+ 
+.chest .lid{ transform-box:fill-box; transform-origin:0% 100%;
+  transition:transform 1s cubic-bezier(.3,1.4,.5,1) 1.9s; }
+.finale.open .chest .lid{ transform:rotate(-18deg) translate(-2px,-4px); }
+ 
+.spark{ position:absolute; z-index:2; color:#fff3b8; font-size:1.2rem; opacity:0;
+  text-shadow:0 0 8px #ffd36b, 0 0 14px rgba(255,200,100,.8); }
+.finale.open .spark{ animation:twinkle 1.8s ease-in-out infinite; }
+@keyframes twinkle{
+  0%,100%{ opacity:0; transform:scale(.4) rotate(0deg); }
+  50%{ opacity:1; transform:scale(1.15) rotate(25deg); }
+}
+ 
+.finale .final-card{ position:relative; z-index:2; padding:16px; max-width:360px;
+  transition:opacity 1.4s ease 3.6s, transform 1.4s ease 3.6s; }
+.finale .final-card h2{ margin:4px 0 8px; font-size:1.15rem; }
+.finale .final-card p{ font-size:.88rem; line-height:1.5; margin:6px 0; }
+.final-words{ font-family:'Cinzel',serif; font-size:.7rem !important; letter-spacing:2px; color:var(--ink-soft); }
+ 
 @media (min-width: 768px){
   .desk{
     max-width: 800px;
   }
 }
+ 
+
+
+
+
