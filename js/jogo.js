@@ -15,23 +15,15 @@ const LEVELS = [
       {title:'Charada da duna', text:'"Sou feita de montanhas que o vento e o tempo moeram. Não tenho pés, mas cubro tudo o que caminha. Se tentares me segurar, escorro entre os dedos; se me deixares cair, conto as horas."'}
     ],
     answer:'AREIA' },
-  { desc:"Um novo papiro chegou rasgado ao meio. As duas metades contam a mesma história.",
-    legendAdd:{},
-    clues:[
-      {title:'Fragmento de papiro', glyphs:'𓂋 𓇋 𓅱'},
-      {title:'Metade rasgada — início', text:'"Corto o deserto sem nascer da chuva;'},
-      {title:'Metade rasgada — fim', text:'sigo sempre o mesmo caminho até o mar."'}
-    ],
-    answer:'RIO' },
   { desc:"O último papiro foi encontrado inteiro. Ele guarda a verdade final — e uma palavra que você ainda não conhece.",
     legendAdd:{T:'𓏏',N:'𓈖',D:'𓆓'},
     clues:[
       {title:'O papiro completo',
-       text:'"No princípio, havia apenas um olho de fogo que abria e fechava sobre o mundo, sem nunca dormir duas vezes no mesmo lugar: os antigos o chamavam de ___.<br><br>Depois veio algo que nasceu longe e morreu no sal, sem pernas, sem pressa, sem nunca andar em linha reta: os antigos o chamavam de ___.<br><br>O deserto inteiro se curvava diante do que não tinha forma, mas tinha memória de nada — bilhões de grãos, um só nome: os antigos o chamavam de ___.<br><br>Mas até isso, um dia, se cala. E o que resta depois do silêncio não tem nome entre os vivos — os sacerdotes só ousavam sussurrar: ___."'},
+       text:'"No princípio, havia apenas um olho de fogo que abria e fechava sobre o mundo, sem nunca dormir duas vezes no mesmo lugar: os antigos o chamavam de ___.<br><br>O deserto inteiro se curvava diante do que não tinha forma, mas tinha memória de nada — bilhões de grãos, um só nome: os antigos o chamavam de ___.<br><br>Mas até isso, um dia, se cala. E o que resta depois do silêncio não tem nome entre os vivos — os sacerdotes só ousavam sussurrar: ___."'},
       {title:'Palavra selada', glyphs:'𓇋 𓏏 𓇋 𓂋 𓈖 𓇋 𓆓 𓄿 𓆓 𓇋', text:'A palavra que os sacerdotes só ousavam sussurrar foi gravada na pedra. Use o caderno de campo (💡 Dica) para decifrar.'},
-      {title:'Instrução final', text:'Escreva as quatro palavras que preenchem as lacunas, na ordem, separadas por espaço.'}
+      {title:'Instrução final', text:'Escreva as três palavras que preenchem as lacunas, na ordem, separadas por espaço.'}
     ],
-    answer:'SOL RIO AREIA ETERNIDADE' }
+    answer:'SOL AREIA ETERNIDADE' }
 ];
  
 let level = 0;
@@ -283,7 +275,7 @@ async function showFinal(){
       <div class="final-card">
         <div class="final-glyphs">𓅓 𓂀 𓏏 𓊪</div>
         <h2>O Tesouro do Faraó</h2>
-        <p>O sol, o rio e a areia mostraram o caminho, e a eternidade abriu a porta. Diante de você está o ouro que nenhum ladrão de tumbas jamais encontrou.</p>
+        <p>O sol e a areia mostraram o caminho, e a eternidade abriu a porta. Diante de você está o ouro que nenhum ladrão de tumbas jamais encontrou.</p>
         <p class="final-words">${LEVELS[LEVELS.length - 1].answer.split(' ').join(' · ')}</p>
         <p class="final-closing">Mas guarde isto: o maior tesouro é ter decifrado o que o silêncio escondeu por milhares de anos. Parabéns, o seu nome agora está gravado entre os grandes arqueólogos!</p>
       </div>
